@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<script type="text/javascript" src="js/jquery-1.8.3.js" ></script>
+	<script type="text/javascript" src="js/mustache.js" ></script>
+	<script type="text/javascript" src="js/guitartool.js" ></script>
+	<link type="text/css" href="guitartool.css" rel="stylesheet" ></link>
+	<meta name="viewport" content="width=1024">
+	
+</head>
+<body>
+	<h1>FretboardScope</h1>
+		<div id="topcontrols">
+		<div class="top_control">
+		<span class="label">Instrument</span>
+		<select name="tuning" class="tuning_choice">
+			<!--<option value="standard"  >Standard Guitar</option>
+			<option value="fourths" >Fourths Guitar</option>-->
+		</select>
+	<!--	<span class="label">Link Key/Chord</span>
+		<input type="checkbox" class="linkchords"></input> -->
+		<span class="label">Theme</span>
+		<select name="theme" class="theme_choice">
+			<option value="standard"  >Maple theme</option>
+			<option value="fourths" >Dark theme</option>
+		</select>
+
+		</div>		
+	</div>
+	<div id="guitarneck">
+		
+	</div>
+
+	<div id="keycontrols">
+
+	</div>
+<script id="fret_template" type="text/template" ><div id="s{{string}}_fret{{fret}}" class="fret">
+		<span class="fret_main"></span>
+		<span class="fret_second"></span>
+		<span class="fret_third"></span>
+	</div></script>	
+	<script id="key_control_template" type="text/template" ><div id="key_control{{layer}}" class="key_control">
+		<span class="label">Key/Chord</span>
+		<select name="key_choice{{layer}}" class="key_choice" />
+		<select name="chord_choice{{layer}}" class="chord_choice"/>
+		<span class="label">Scale</span>
+		<select name="note_choice{{layer}}" class="note_choice"/>
+		<br/>
+		<span class="label">Show notes as: </span>
+		<select name="text_choice{{layer}}" class="text_choice">
+			<option value="note"  >Note names</option>
+			<option value="name" >Scale degrees</option>
+		</select>
+		<div class="note_choice_description"></div>
+	</div></script>	
+</body>
+</html>

@@ -1,0 +1,180 @@
+
+html {
+	background: #eee;
+}
+
+body {
+	background: #fff;
+	width: 850px;
+	margin-left: 30px;
+	margin-top: 0;
+	padding-left: 20px;
+	padding-top: 10px;
+	padding-bottom:20px;
+}
+
+
+h1 {
+	font-family: Impact;
+	color: #98c;
+	margin-bottom: 10px;
+	margin-top: 0;
+	display: inline;
+	vertical-align: top
+}
+
+#guitarneck {
+	background-image: url('woodt.jpg');
+	background-size: 212px;
+	background-repeat: repeat;
+	width: 804px;
+	/*border-left:1px solid rgba(1,1,1,0.3);*/
+	border-bottom:1px solid rgba(1,1,1,0.2);
+	margin-left: 8px;
+}
+
+.fret {
+	width:64px;
+	height:22px;
+	/*border: 1px solid #99c;*/
+	padding-top: 2px;
+	display: inline-block;
+	margin: 0;
+	vertical-align: bottom;
+	font-size: 12px;
+	font-family: Verdana;
+	border-right: 1px solid rgba(1,1,1,0.2);
+	border-top: 1px solid rgba(1,1,1,0.5);
+	border-left: 2px solid rgba(1,1,1,0.7);
+}
+
+
+.fretpull p {
+	display: inline-block;
+	width: 1.6em;
+	height: 1.3em;
+	
+	position: absolute;
+	margin-top: .1em;
+	border: 1px solid black;
+	border-radius: 1em;
+	margin-left: 1.88em;
+	text-align: center;
+	background-color: white;
+}
+
+.fret_secondpull p {
+	/*border: 1px solid #ccc;*/
+	margin-left: 3.8em;
+	/*font-size: .85em;*/
+	background-color: #888;
+}
+
+.fret p {
+	display: inline-block;
+	width: 1.6em;
+	height: 1.3em;
+	
+	position: absolute;
+	margin-top: .1em;
+	border: 1px solid black;
+	border-radius: 1em;
+	margin-left: 3.8em;
+	text-align: center;
+	background-color: white;
+}
+
+.fret_second p {
+	/*border: 1px solid #ccc;*/
+	margin-left: 1.88em;
+
+	/*font-size: .85em;*/
+	background-color: #ccc;
+}
+
+.fret_main p {
+	/*border: 1px solid #Faa;*/
+	background-color: #bfb;
+	margin-left: .1em;
+	/*font-size: .85em;*/
+
+}
+
+.guitarString {
+	display: block;
+}
+
+.fret_second {
+	color: #00d;
+}
+
+.fret_third {
+	color: #d00;
+}
+
+#keycontrols {
+	margin-top: 20px;
+	margin-left: 12px;
+}
+
+#topcontrols {
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 12px;
+}
+
+.top_control {
+	display: inline-block;
+	width:450px;
+	border-radius: 8px;
+	/*border: 1px solid #999;*/
+	padding: 4px 10px 4px 10px;
+	margin-right: 14px;
+	font-family: impact;
+	font-size: .95em;
+	color: #999;
+}
+
+.key_control {
+	display: inline-block;
+	width:226px;
+	border-radius: 8px;
+	border: 1px solid #999;
+	padding: 10px;
+	margin-right: 14px;
+	font-family: impact;
+	font-size: .95em;
+	color: #999;
+}
+
+.key_control span {
+	color: #89c;
+	min-width: 42px;
+	display: inline-block;
+}
+
+.key_control select {
+	font-family: impact;
+	color: #66c;
+	font-size: 1em;
+}
+
+.note_choice {
+	width: 174px;
+}
+
+.top_control span {
+	color: #89c;
+	min-width: 42px;
+	display: inline-block;
+}
+
+.top_control select {
+	font-family: impact;
+	color: #66c;
+	font-size: 1em;
+}
+
+.tuning_choice, .linkchords {
+	margin-right: 24px;
+}

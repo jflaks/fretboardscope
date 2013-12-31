@@ -125,7 +125,7 @@ h1 {
 
 .top_control {
 	display: inline-block;
-	width:450px;
+	width:490px;
 	border-radius: 8px;
 	/*border: 1px solid #999;*/
 	padding: 4px 10px 4px 10px;
@@ -173,6 +173,10 @@ h1 {
 	font-family: impact;
 	color: #66c;
 	font-size: 1em;
+}
+
+.linkchord {
+	margin-left:24px;
 }
 
 .tuning_choice, .linkchords {

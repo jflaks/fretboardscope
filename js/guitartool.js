@@ -2,118 +2,120 @@
 var guitartool
 $(function(){
 	guitartool = (function(){
-		var nameMode = "name"
-		var noteMode = "note"
-		var stringMap = {
-			"Standard Guitar" : ['F','C','G','D','A','E'],	
-			"Fourths Guitar" : ['F','C','G','D','A','E'],
-			"Mandolin" : ['E','A','D','G']		
-		}
-		var strings = stringMap["Standard Guitar"]
-
-		var template = $('#fret_template').html()
+		var nameMode = "name", noteMode = "note", stringMap, strings, template, controltemplate, scaleMap, noteMap, noteKeys, noteNumMap, scaleKeys, scaleNameMap,
+			chordChoiceMap, chordScaleMap
 		
-		// draw the fretboard
+		initializeStringMap();
+		initializeScaleMap();
+		initializeNoteMap();
+		initializeChordChoiceMap();
+		initializeChordScaleMap();
+		initializeNoteNumMap();
+		initializeScaleNameMap();
+		initializeTemplates();
 		drawFretboard()
-		
-		var controltemplate = $('#key_control_template').html()
-		for (var i=1; i<4; i++) {
-			var elem = Mustache.to_html(controltemplate,{layer: i})
-			$('#keycontrols').append(elem)
-		}
+		drawControls()
+		bindControls()
 		
 		
-		var scaleMap = {
-			none : {notes: [], 
-				names: [], title: 'None'},
-			aeolian : {notes: [0,2,4,5,7,9,11], 
-				names: ['1','2','3','4','5','6','7'], title: 'Aeolian / Nat Major'},
-			dorian : {notes: [0,2,3,5,7,9,10], 
-				names: ['1','2','b3','4','5','6','b7'], title: 'Dorian'},
-			phrygian : {notes: [0,1,3,5,7,8,10], 
-				names: ['1','b2','b3','4','5','b6','b7'], title: 'Phrygian'},
-			lydian : {notes: [0,2,4,6,7,9,11],
-				names: ['1','2','3','#4','5','6','7'],  title: 'Lydian'},
-			mixolydian : {notes: [0,2,4,5,7,9,10], title: 'Mixolydian'}, 
-			ionian : {notes: [0,2,3,5,7,8,10], 
-				names: ['1','2','b3','4','5','b6','b7'], title: 'Ionian / Nat Minor'},
-			locrian : {notes: [0,1,3,5,6,8,10], 
-				names: ['1','b2','b3','4','b5','b6','b7'], title: 'Locrian'},
-			min7 : {notes: [0,3,7,10], 
-				names: ['1','b3','5','b7'], title: 'Min7 Arp'}  
-		};
-		var noteMap = { 'C': 0, 'C#':1, 'D':2, 'D#':3, 'E':4, 'F':5, 'F#':6, 'G':7, 'G#':8, 'A':9, 'A#':10, 'B':11 };
-		var noteKeys = Object.keys(noteMap);
-		var noteNumMap = {};
-		for (var i=0; i<noteKeys.length; i++) {
-			var noteName = noteKeys[i];
-			var noteNum = noteMap[noteName];
-			noteNumMap[noteNum] = noteName;
-		}
-		var scaleKeys = Object.keys(scaleMap);
-		var scaleNameMap = {};
-		for (var i=0; i<scaleKeys.length; i++) {
-			var scaleName = scaleKeys[i];
-			var scaleDesc = scaleMap[scaleName].title;
-			scaleNameMap[scaleName] = scaleDesc;
-		}
-		var chordChoiceMap = { 
-			key: 'Major key', 
-			maj7: 'Major 7', 
-			min7: 'Minor 7', 
-			dom7: 'Dominant 7'
-		}
-		var chordScaleMap = {
-			key : [ 
-				{ shift: 0, scale: 'aeolian'},
-				{ shift: 2, scale: 'dorian'},
-				{ shift: 4, scale: 'phrygian'},
-				{ shift: 5, scale: 'lydian'},
-				{ shift: 7, scale: 'mixolydian'},
-				{ shift: 9, scale: 'ionian'},
-				{ shift: 11, scale: 'locrian'},
-			],
-			min7 : [],
-			maj7 : [
-				{ shift : 4, scale: 'min7'},
-				{ shift : 9, scale: 'min7'},
-				{ shift : 11, scale: 'min7'}],
-			dom7 : []
+
+		function initializeStringMap() {
+			stringMap = {
+				"Standard Guitar" : ['E','B','G','D','A','E'],	
+				"Fourths Guitar" : ['F','C','G','D','A','E'],
+				"DADGAD Guitar" : ['D','A','G','D','A','D'],
+				"Mandolin" : ['E','A','D','G']		
+			}
+			strings = stringMap["Standard Guitar"] //initial choice
 
 		}
-		var counter = 0
-		$.each(noteNumMap, function(key, value) {   
-   		  
-   		  $('.key_choice')
-         	.append($("<option " + (counter == 0 ? "selected=true" : '') + "></option>")
-         	.attr("value",key)
-	         	.text(value));
-	       counter++ 
-		});
-		$.each(chordChoiceMap, function(key, value) {   
-   		  $('.chord_choice')
-         	.append($("<option></option>")
-         	.attr("value",key)
-	         	.text(value)); 
-		});
+		function initializeScaleMap() {
+			scaleMap = {
+				none : {notes: [], 
+					names: [], title: 'None'},
+				aeolian : {notes: [0,2,4,5,7,9,11], 
+					names: ['1','2','3','4','5','6','7'], title: 'Aeolian / Nat Major'},
+				dorian : {notes: [0,2,3,5,7,9,10], 
+					names: ['1','2','b3','4','5','6','b7'], title: 'Dorian'},
+				phrygian : {notes: [0,1,3,5,7,8,10], 
+					names: ['1','b2','b3','4','5','b6','b7'], title: 'Phrygian'},
+				lydian : {notes: [0,2,4,6,7,9,11],
+					names: ['1','2','3','#4','5','6','7'],  title: 'Lydian'},
+				mixolydian : {notes: [0,2,4,5,7,9,10],
+					names: ['1','2','3','4','5','6','b7'], title: 'Mixolydian'}, 
+				ionian : {notes: [0,2,3,5,7,8,10], 
+					names: ['1','2','b3','4','5','b6','b7'], title: 'Ionian / Nat Minor'},
+				locrian : {notes: [0,1,3,5,6,8,10], 
+					names: ['1','b2','b3','4','b5','b6','b7'], title: 'Locrian'},
+				min7 : {notes: [0,3,7,10], 
+					names: ['1','b3','5','b7'], title: 'Min7 Arp'},  
+				maj7 : {notes: [0,4,7,11], 
+					names: ['1','3','5','7'], title: 'Maj7 Arp'}	
+			};
+		}
+		function initializeNoteMap() {
+			noteMap = { 'C': 0, 'C#':1, 'D':2, 'D#':3, 'E':4, 'F':5, 'F#':6, 'G':7, 'G#':8, 'A':9, 'A#':10, 'B':11 }
+		}
+		function initializeTemplates() {
+			template = $('#fret_template').html()
+			controltemplate = $('#key_control_template').html()
 
-		$.each(stringMap, function(key, value) {   
-   		  $('.tuning_choice')
-         	.append($("<option></option>")
-         	.attr("value",key)
-	         	.text(key)); 
-		});
+		}
+		function initializeChordChoiceMap() {
+			chordChoiceMap = { 
+				key: 'Major key', 
+				maj7: 'Major 7', 
+				min7: 'Minor 7', 
+				dom7: 'Dominant 7'
+			}
+		}
+		function initializeChordScaleMap() {			
+			chordScaleMap = {
+				key : [ 
+					{ shift: 0, scale: 'aeolian'},
+					{ shift: 2, scale: 'dorian'},
+					{ shift: 4, scale: 'phrygian'},
+					{ shift: 5, scale: 'lydian'},
+					{ shift: 7, scale: 'mixolydian'},
+					{ shift: 9, scale: 'ionian'},
+					{ shift: 11, scale: 'locrian'},
+				],
+				min7 : [
+					{ shift: 0, scale: 'min7'},
+					{ shift: 7, scale: 'min7'},
+					{ shift: 3, scale: 'maj7'},
+					{ shift: 5, scale: 'maj7'},
+					{ shift: 10, scale: 'maj7'}
+				],
+				maj7 : [
+					{ shift : 4, scale: 'min7'},
+					{ shift : 9, scale: 'min7'},
+					{ shift : 11, scale: 'min7'}],
+				dom7 : []
 
-		$.each([1,2,3], function(idx, layer) {
-			// bind events
-			$('select[name=key_choice' + layer + '], select[name=chord_choice' + layer + ']').on('change', function() { updateScaleSelector(layer) })
-			$('select[name=note_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
-			$('select[name=text_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
-
-			updateScaleSelector(layer)
-		})
+			}
+		}
+		function initializeNoteNumMap() {
+			noteKeys = Object.keys(noteMap);
+			noteNumMap = {};
+			for (var i=0; i<noteKeys.length; i++) {
+				var noteName = noteKeys[i];
+				var noteNum = noteMap[noteName];
+				noteNumMap[noteNum] = noteName;
+			}
+		}
+		function initializeScaleNameMap() {
+			scaleKeys = Object.keys(scaleMap);
+			scaleNameMap = {};
+			for (var i=0; i<scaleKeys.length; i++) {
+				var scaleName = scaleKeys[i];
+				var scaleDesc = scaleMap[scaleName].title;
+				scaleNameMap[scaleName] = scaleDesc;
+			}
+		}
 
 		function drawFretboard() {
+			$('#guitarneck').empty()
 			for (var i=0; i<strings.length; i++) {
 				var stringDiv = document.createElement('div')
 				stringDiv.className = 'guitarString'
@@ -125,6 +127,50 @@ $(function(){
 					$('#string' + i).append(elem)				
 				}
 			}
+		}
+		function drawControls() {
+			for (var i=1; i<4; i++) {
+				var elem = Mustache.to_html(controltemplate,{layer: i})
+				$('#keycontrols').append(elem)
+			}
+
+			var counter = 0
+			$.each(noteNumMap, function(key, value) {   
+	   		  $('.key_choice')
+	         	.append($("<option " + (counter == 0 ? "selected=true" : '') + "></option>")
+	         	.attr("value",key)
+		         	.text(value));
+		       counter++ 
+			});
+			$.each(chordChoiceMap, function(key, value) {   
+	   		  $('.chord_choice')
+	         	.append($("<option></option>")
+	         	.attr("value",key)
+		         	.text(value)); 
+			});
+
+			$.each(stringMap, function(key, value) {   
+	   		  $('.tuning_choice')
+	         	.append($("<option></option>")
+	         	.attr("value",key)
+		         	.text(key)); 
+			});
+		}
+		function bindControls() {
+			$.each([1,2,3], function(idx, layer) {
+				$('select[name=key_choice' + layer + '], select[name=chord_choice' + layer + ']').on('change', function() { updateScaleSelector(layer) })
+				$('select[name=note_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
+				$('select[name=text_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
+				updateScaleSelector(layer)
+			})
+
+			$('select[name=tuning]').on('change', function() { changeTuning(this.value) })
+		}
+
+		function changeTuning(tuningName) {
+			strings = stringMap[tuningName]
+			drawFretboard()
+			drawAllSelectedScales()
 		}
 
 		function updateScaleSelector(layer) {
@@ -172,6 +218,12 @@ $(function(){
 			
 		}
 
+		function drawAllSelectedScales() {
+			$.each([1,2,3], function(idx, layer) {
+				drawScaleForSelection(layer);
+			});
+		}
+
 		function drawNotes(scaleMap,textMode,notes,layer) {
 				//var notes = scaleMap['notes'];
 				var layerSuffix = 'main'
@@ -199,7 +251,7 @@ $(function(){
 				}
 			}
 		
-function drawScale(scaleName, nameMode, baseNote, layer) {
+		function drawScale(scaleName, nameMode, baseNote, layer) {
 				var baseNotes = scaleMap[scaleName]['notes']
 				var semitonesUp = noteMap[baseNote]
 				var scaleNotes = []
@@ -212,6 +264,7 @@ function drawScale(scaleName, nameMode, baseNote, layer) {
 				}
 				drawNotes(scaleMap[scaleName], nameMode, scaleNotes, layer)
 			}
+
 
 		return { 
 

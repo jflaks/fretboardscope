@@ -17,14 +17,15 @@ $(function(){
 		drawControls()
 		bindControls()
 		
-		
-
 		function initializeStringMap() {
 			stringMap = {
 				"Standard Guitar" : ['E','B','G','D','A','E'],	
 				"Fourths Guitar" : ['F','C','G','D','A','E'],
 				"DADGAD Guitar" : ['D','A','G','D','A','D'],
-				"Mandolin" : ['E','A','D','G']		
+				"Mandolin" : ['E','A','D','G'],
+				"Standard Bass" : ['G','D','A','E'],
+				"5 string Bass" : ['G','D','A','E','B'],
+				"Stick Standard" : ['D','A','E','B','F#','C','G','D','A','E']		
 			}
 			strings = stringMap["Standard Guitar"] //initial choice
 
@@ -33,8 +34,8 @@ $(function(){
 			scaleMap = {
 				none : {notes: [], 
 					names: [], title: 'None'},
-				aeolian : {notes: [0,2,4,5,7,9,11], 
-					names: ['1','2','3','4','5','6','7'], title: 'Aeolian / Nat Major'},
+				ionian : {notes: [0,2,4,5,7,9,11], 
+					names: ['1','2','3','4','5','6','7'], title: 'Ionian / Nat Major'},
 				dorian : {notes: [0,2,3,5,7,9,10], 
 					names: ['1','2','b3','4','5','6','b7'], title: 'Dorian'},
 				phrygian : {notes: [0,1,3,5,7,8,10], 
@@ -43,14 +44,20 @@ $(function(){
 					names: ['1','2','3','#4','5','6','7'],  title: 'Lydian'},
 				mixolydian : {notes: [0,2,4,5,7,9,10],
 					names: ['1','2','3','4','5','6','b7'], title: 'Mixolydian'}, 
-				ionian : {notes: [0,2,3,5,7,8,10], 
-					names: ['1','2','b3','4','5','b6','b7'], title: 'Ionian / Nat Minor'},
+				aeolian : {notes: [0,2,3,5,7,8,10], 
+					names: ['1','2','b3','4','5','b6','b7'], title: 'Aeolian / Nat Minor'},
 				locrian : {notes: [0,1,3,5,6,8,10], 
 					names: ['1','b2','b3','4','b5','b6','b7'], title: 'Locrian'},
+				lydianb7 : {notes: [0,2,4,6,7,9,10],
+					names: ['1','2','3','#4','5','6','b7'],  title: 'Lydian Flat 7'},
 				min7 : {notes: [0,3,7,10], 
 					names: ['1','b3','5','b7'], title: 'Min7 Arp'},  
 				maj7 : {notes: [0,4,7,11], 
-					names: ['1','3','5','7'], title: 'Maj7 Arp'}	
+					names: ['1','3','5','7'], title: 'Maj7 Arp'},
+				dom7 : {notes: [0,4,7,10], 
+					names: ['1','3','5','b7'], title: 'Dom7 Arp'},	
+				minpent : {notes: [0,3,5,7,10],
+					names: ['1','3','4','5','7'], title: 'Min Pentatonic'}	
 			};
 		}
 		function initializeNoteMap() {
@@ -63,24 +70,30 @@ $(function(){
 		}
 		function initializeChordChoiceMap() {
 			chordChoiceMap = { 
-				key: 'Major key', 
 				maj7: 'Major 7', 
 				min7: 'Minor 7', 
-				dom7: 'Dominant 7'
+				dom7: 'Dom 7',
+				dom11: 'Dom 7sus4',
+				key: 'Major key'
 			}
 		}
 		function initializeChordScaleMap() {			
 			chordScaleMap = {
 				key : [ 
-					{ shift: 0, scale: 'aeolian'},
+					{ shift: 0, scale: 'ionian'},
 					{ shift: 2, scale: 'dorian'},
 					{ shift: 4, scale: 'phrygian'},
 					{ shift: 5, scale: 'lydian'},
 					{ shift: 7, scale: 'mixolydian'},
-					{ shift: 9, scale: 'ionian'},
+					{ shift: 9, scale: 'aeolian'},
 					{ shift: 11, scale: 'locrian'},
 				],
 				min7 : [
+					{ shift: 0, scale: 'dorian'},
+					{ shift: 0, scale: 'aeolian'},
+					{ shift: 0, scale: 'minpent'},
+					{ shift: 2, scale: 'minpent'},
+					{ shift: 7, scale: 'minpent'},
 					{ shift: 0, scale: 'min7'},
 					{ shift: 7, scale: 'min7'},
 					{ shift: 3, scale: 'maj7'},
@@ -88,10 +101,34 @@ $(function(){
 					{ shift: 10, scale: 'maj7'}
 				],
 				maj7 : [
+					{ shift : 0, scale: 'ionian'},
+					{ shift : 0, scale: 'lydian'},
+					{ shift: 4, scale: 'minpent'},
+					{ shift: 9, scale: 'minpent'},
+					{ shift: 11, scale: 'minpent'},
 					{ shift : 4, scale: 'min7'},
 					{ shift : 9, scale: 'min7'},
-					{ shift : 11, scale: 'min7'}],
-				dom7 : []
+					{ shift : 11, scale: 'min7'},
+					{ shift: 7, scale: 'maj7'}
+				],
+				dom7 : [
+					{ shift : 0, scale: 'lydianb7'},
+					{ shift: 9, scale: 'minpent'},
+					{ shift: 0, scale: 'dom7'},
+					{ shift: 2, scale: 'dom7'},
+					{ shift: 9, scale: 'min7'}
+				],
+				dom11 : [
+					{ shift : 0, scale: 'mixolydian'},
+					{ shift: 2, scale: 'minpent'},
+					{ shift: 7, scale: 'minpent'},
+					{ shift: 9, scale: 'minpent'},
+					{ shift: 0, scale: 'dom7'},
+					{ shift: 7, scale: 'min7'},
+					{ shift: 9, scale: 'min7'},
+					{ shift: 5, scale: 'maj7'},
+					{ shift: 10, scale: 'maj7'}
+				]
 
 			}
 		}
@@ -158,13 +195,28 @@ $(function(){
 		}
 		function bindControls() {
 			$.each([1,2,3], function(idx, layer) {
-				$('select[name=key_choice' + layer + '], select[name=chord_choice' + layer + ']').on('change', function() { updateScaleSelector(layer) })
+				$('select[name=key_choice' + layer + '], select[name=chord_choice' + layer + ']').on('change', function() { updateScaleSelector(layer, true) })
 				$('select[name=note_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
 				$('select[name=text_choice' + layer + ']').on('change', function() { drawScaleForSelection(layer) })
 				updateScaleSelector(layer)
 			})
 
 			$('select[name=tuning]').on('change', function() { changeTuning(this.value) })
+
+			$('#help').hover(function () {
+				$('#guitarneck').hide()	
+				$('#keycontrols').hide()	
+				$('.instructions').show()	
+			}, function() {				
+				$('.instructions').hide()	
+				$('#guitarneck').show()	
+				$('#keycontrols').show()	
+			})
+
+			$('.theme_choice').on('change', function() {
+				$('body').removeClass()
+				$('body').addClass(this.value)
+			})
 		}
 
 		function changeTuning(tuningName) {
@@ -173,7 +225,8 @@ $(function(){
 			drawAllSelectedScales()
 		}
 
-		function updateScaleSelector(layer) {
+		function updateScaleSelector(layer, checkForLinkedSelectors) {
+				
 				var dynamicScaleNameMap,rootNoteElem,rootNoteCode,chordCodeElem,chordCode,selector
 				selector = $("[name='note_choice" + layer + "']")
 				selector.find('option').remove()
@@ -195,6 +248,19 @@ $(function(){
 					})
 				}
 				drawScaleForSelection(layer)
+				if (checkForLinkedSelectors == true) {
+					if ($('input[name=linkChords]').attr('checked') == 'checked') {
+						$.each([1,2,3], function(idx, layerNum) {
+							if (layerNum != layer) {
+								var chosenKeyVal = $('select[name=key_choice' + layer )[0].value
+								var chosenChordVal = $('select[name=chord_choice' + layer )[0].value
+								$('select[name=key_choice' + layerNum).val(chosenKeyVal)
+								$('select[name=chord_choice' + layerNum).val(chosenChordVal)
+								updateScaleSelector(layerNum)
+							}
+						})
+					}
+ 				}
 		}
 		function drawScaleForSelection(layer) {
 			
@@ -225,7 +291,6 @@ $(function(){
 		}
 
 		function drawNotes(scaleMap,textMode,notes,layer) {
-				//var notes = scaleMap['notes'];
 				var layerSuffix = 'main'
 				if (layer == 2) { 
 					layerSuffix = 'second' 
@@ -236,7 +301,7 @@ $(function(){
 				if (!scaleMap) { return }
 				
 				for (var j=0; j<strings.length; j++) {
-					var stringStartNote = noteMap[strings[j]] - 1; //can calc once and store
+					var stringStartNote = noteMap[strings[j]] - 1; 
 					for(var i=0; i<notes.length; i++) {
 						var fret = notes[i] - stringStartNote -1;
 						if (fret < 1) { fret = fret + 12; }

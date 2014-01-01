@@ -3,7 +3,7 @@ html {
 	background: #eee;
 }
 
-body {
+.guitartool {
 	background: #fff;
 	width: 850px;
 	margin-left: 30px;
@@ -11,8 +11,27 @@ body {
 	padding-left: 20px;
 	padding-top: 10px;
 	padding-bottom:20px;
+	box-shadow: 0 2px 25px #999;
+	min-height: 340px;
 }
 
+.instructions {
+	margin-top:20px;
+	font-size: .9em;
+	padding-right: 80px;
+	display: none;
+}
+
+.help {
+	margin-left: 20px;
+}
+
+.instruct_header {
+	font-size: 1.2em;
+	line-height: 1.1em;
+	font-family: Impact;
+	color: #98c;
+}
 
 h1 {
 	font-family: Impact;
@@ -33,6 +52,17 @@ h1 {
 	margin-left: 8px;
 }
 
+.mono #guitarneck {
+	background-image: none;
+}
+
+.mono .fret_third p {
+	background-color: #eee;
+}
+.mono .fret_main p {
+	background-color: #bbb;
+}
+
 .fret {
 	width:64px;
 	height:22px;
@@ -49,27 +79,6 @@ h1 {
 }
 
 
-.fretpull p {
-	display: inline-block;
-	width: 1.6em;
-	height: 1.3em;
-	
-	position: absolute;
-	margin-top: .1em;
-	border: 1px solid black;
-	border-radius: 1em;
-	margin-left: 1.88em;
-	text-align: center;
-	background-color: white;
-}
-
-.fret_secondpull p {
-	/*border: 1px solid #ccc;*/
-	margin-left: 3.8em;
-	/*font-size: .85em;*/
-	background-color: #888;
-}
-
 .fret p {
 	display: inline-block;
 	width: 1.6em;
@@ -83,6 +92,7 @@ h1 {
 	text-align: center;
 	background-color: white;
 }
+
 
 .fret_second p {
 	/*border: 1px solid #ccc;*/
@@ -125,7 +135,7 @@ h1 {
 
 .top_control {
 	display: inline-block;
-	width:490px;
+	width:520px;
 	border-radius: 8px;
 	/*border: 1px solid #999;*/
 	padding: 4px 10px 4px 10px;
@@ -181,4 +191,12 @@ h1 {
 
 .tuning_choice, .linkchords {
 	margin-right: 24px;
+}
+
+#sign {
+	font-family: monospace;
+	font-size: .5em;
+	padding-left: 785px;
+	margin-top: 28px;
+	color: #ddd;
 }

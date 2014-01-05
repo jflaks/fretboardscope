@@ -9,10 +9,10 @@ Now, for the middle selector, again leaving the chord choice at <strong>C major7
 
 Finally choose an <strong>E Minor blues</strong> on the third column.   This is probably a familiar pattern.  Try to see how it fits in with what you've been playing, and try weaving a blue note phrasing in between your arpeggios.
 		
-##Other Controls		
+###Other Controls		
 Use the dropdown at the top to choose different tunings/instruments, and choose a different appearance for the fretboard with the Theme selector. You may also choose to unlink the key/chord selectors from each other by unchecking "link layers", allowing you to visualize patterns as they become available over changes in a song.
 
-##Possible Additions##
+###Possible Additions##
 * More tunings
 * More themes		
 * Possibility of a piano CSS / tuning? This would need a javascript line to add a class, and probably some fixed position styling for each fret

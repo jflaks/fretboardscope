@@ -56,8 +56,8 @@ $(function(){
 					names: ['1','3','5','7'], title: 'Maj7 Arp'},
 				dom7 : {notes: [0,4,7,10], 
 					names: ['1','3','5','b7'], title: 'Dom7 Arp'},	
-				minpent : {notes: [0,3,5,7,10],
-					names: ['1','3','4','5','7'], title: 'Min Pentatonic'}	
+				minpent : {notes: [0,3,5,6,7,10],
+					names: ['1','3','4','b5','5','7'], title: 'Minor blues'}	
 			};
 		}
 		function initializeNoteMap() {
@@ -239,7 +239,7 @@ $(function(){
 				if (chordCodeElem) { chordCode = chordCodeElem.value  
 					$.each(chordScaleMap[chordCode], function(index,entry) {
 						var rootNote = parseInt(rootNoteCode) + entry.shift
-						while (rootNote > 12) {
+						while (rootNote >= 12) {
 							rootNote -= 12
 						}
 						selector.append('<option value="' + rootNote + '-' + entry.scale + '">' 

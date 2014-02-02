@@ -25,7 +25,10 @@ $(function(){
 				"Mandolin" : ['E','A','D','G'],
 				"Standard Bass" : ['G','D','A','E'],
 				"5 string Bass" : ['G','D','A','E','B'],
-				"Stick Standard" : ['D','A','E','B','F#','C','G','D','A','E']		
+				"Stick Classic" : ['D','A','E','B','F#','C','G','D','A','E'],
+				"Stick Reciprocal" : ['C','G','D','A','E','C','G','D','A','E'],
+				"Stick All Fourths" : ['B','G','D','A','E','B','E','A','D','G'],
+
 			}
 			strings = stringMap["Standard Guitar"] //initial choice
 
@@ -252,10 +255,10 @@ $(function(){
 					if ($('input[name=linkChords]').attr('checked') == 'checked') {
 						$.each([1,2,3], function(idx, layerNum) {
 							if (layerNum != layer) {
-								var chosenKeyVal = $('select[name=key_choice' + layer )[0].value
-								var chosenChordVal = $('select[name=chord_choice' + layer )[0].value
-								$('select[name=key_choice' + layerNum).val(chosenKeyVal)
-								$('select[name=chord_choice' + layerNum).val(chosenChordVal)
+								var chosenKeyVal = $('select[name=key_choice' + layer + ']')[0].value
+								var chosenChordVal = $('select[name=chord_choice' + layer + ']')[0].value
+								$('select[name=key_choice' + layerNum + ']').val(chosenKeyVal)
+								$('select[name=chord_choice' + layerNum + ']').val(chosenChordVal)
 								updateScaleSelector(layerNum)
 							}
 						})
